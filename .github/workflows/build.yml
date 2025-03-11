@@ -150,8 +150,6 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }} - ${{ matrix.cibw_arch }}
     runs-on: ${{ matrix.os }}
-    env:
-      CIBW_ARCHS: ${{ matrix.cibw_arch }} # job 레벨에 설정하여 cibuildwheel이 이 값을 사용하게 함
     strategy:
       matrix:
         include:
@@ -176,6 +174,8 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.13.1
+        with:
+          only: ${{ matrix.cibw_arch }}
         env:
           CIBW_ARCHS: ${{ matrix.cibw_arch }}
 
